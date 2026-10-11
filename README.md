@@ -24,3 +24,10 @@ chrome --headless=new --no-pdf-header-footer --virtual-time-budget=6000 --print-
 También sirve imprimir desde el navegador (Ctrl+P → Guardar como PDF, márgenes: ninguno, con gráficos de fondo).
 
 Los marcadores punteados en ámbar son contenido pendiente del equipo.
+
+## Versiones anteriores
+
+- v2, minimalista con serif: https://nicolascovarrubias.github.io/condor-e2/versiones/v2-minimal/ (tag `v2-minimal`)
+- v1, oscura: https://nicolascovarrubias.github.io/condor-e2/versiones/v1-oscura/ (tag `v1-oscura`)
+
+Las capturas del prototipo en `img/` son reales: se obtuvieron recorriendo el gemelo digital (Streamlit) con un navegador automatizado.
