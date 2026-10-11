@@ -7,13 +7,13 @@
 <meta name="description" content="CONDOR: tus suscripciones a la vista desde el primer cobro, dentro de la app del banco. Presentación Entrega 2, ING2030 UC.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* Deck 16:9 autorado a 1920x1080 y escalado al viewport. Estilo de grilla suiza: grotesca negra, un solo color plano (cobalto) en bloques, naranja solo para alertas. Detalle en notas (tecla N). */
 :root{
   --paper:#F4F4F1; --white:#FFFFFF; --ink:#0E0E0E; --ink2:#3A3A38; --gray:#76766F; --line:#D9D8D2;
-  --cobalt:#2340F5; --cobalt-soft:#E6EAFE;
-  --signal:#FF5B1A; --signal-soft:#FFE9DF;
+  --cobalt:#5468D9; --cobalt-soft:#E8EBFA; --cover:#D9DFF7;
+  --signal:#D9825E; --signal-soft:#F8ECE5;
   --ok:#138A55;
   --bar:#C9C9C2;
   --f:'Archivo',system-ui,sans-serif;
@@ -41,14 +41,14 @@ b,strong{font-weight:700}
 .foot{position:absolute!important;left:120px;right:120px;bottom:38px;display:flex;justify-content:space-between;gap:40px;font:400 13px/1.5 var(--m);color:var(--gray)}
 
 /* Tipografía */
-h1{font:800 124px/.94 var(--f);font-stretch:92%;letter-spacing:-.035em}
+h1{font:700 118px/.98 'Bricolage Grotesque',var(--f);font-variation-settings:'opsz' 96;letter-spacing:-.04em}
 h2{font:800 72px/1.0 var(--f);font-stretch:96%;letter-spacing:-.03em;max-width:1560px}
 .kick{font:500 15px var(--m);letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
 .num{font:800 160px/.86 var(--f);font-stretch:68%;letter-spacing:-.02em}
 .cap{font:400 22px/1.4 var(--f);color:var(--ink2)}
 sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 /* Contenido pendiente del equipo: visible a propósito */
-.tbd{display:inline-block;border:1.5px dashed var(--signal);background:var(--signal-soft);color:#B23A0B;padding:0 9px;font:500 .78em/1.65 var(--m);white-space:nowrap}
+.tbd{display:inline-block;border:1.5px dashed var(--signal);background:var(--signal-soft);color:#9A4A26;padding:0 9px;font:500 .78em/1.65 var(--m);white-space:nowrap}
 
 /* Revelado */
 .rv{opacity:0}
@@ -60,10 +60,12 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .s-cover{padding:0;display:grid;grid-template-columns:1fr 720px}
 .s-cover .l{padding:150px 100px 100px 120px;display:flex;flex-direction:column}
 .s-cover .l .mark{margin-bottom:auto}
-.s-cover h1{margin:26px 0 40px}
-.s-cover .meta{display:flex;gap:14px;align-items:center;font:500 16px var(--m);color:var(--gray);letter-spacing:.06em;text-transform:uppercase}
-.s-cover .r{background:var(--cobalt);display:flex;align-items:center;justify-content:center;padding:80px}
-.ledger{width:100%;background:var(--white);box-shadow:0 30px 60px rgba(0,0,30,.25)}
+.s-cover h1{margin:0 0 70px}
+.team{border-top:1px solid var(--line);padding-top:22px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:baseline}
+.team b{font:600 14px var(--m);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.team span{font:400 17px/1.6 var(--f);color:var(--gray)}
+.s-cover .r{background:var(--cover);display:flex;align-items:center;justify-content:center;padding:80px}
+.ledger{width:100%;background:var(--white);box-shadow:0 24px 50px rgba(40,50,110,.14)}
 .ledger .hd{display:flex;justify-content:space-between;padding:22px 28px;border-bottom:2px solid var(--ink);font:600 13px var(--m);letter-spacing:.1em;text-transform:uppercase}
 .lrow{display:grid;grid-template-columns:1fr auto;gap:6px 16px;padding:22px 28px;border-bottom:1px solid var(--line);align-items:center}
 .lrow:last-child{border-bottom:none}
@@ -149,7 +151,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .score .cap{margin-top:14px;max-width:440px}
 .users{margin-top:44px;padding-top:24px;border-top:2px solid var(--ink)}
 .users .row{display:flex;gap:30px;margin-top:14px}
-.users .row div{font:800 48px/1 var(--f);font-stretch:68%;color:#B23A0B}
+.users .row div{font:800 48px/1 var(--f);font-stretch:68%;color:#9A4A26}
 .users .row span{display:block;font:400 14px var(--m);color:var(--gray);margin-top:6px}
 .chart .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
 .legend{display:flex;gap:20px;font:400 14px var(--m);color:var(--gray)}
@@ -187,7 +189,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .road h4{font:800 34px/1.05 var(--f);font-stretch:94%;margin-bottom:10px}
 .road p{font:400 19px/1.45 var(--f);color:var(--gray);max-width:330px}
 .end{margin-top:auto;display:grid;grid-template-columns:1fr 760px;gap:70px;align-items:stretch}
-.pend .kick{display:block;margin-bottom:14px;color:#B23A0B}
+.pend .kick{display:block;margin-bottom:14px;color:#9A4A26}
 .pend li{list-style:none;display:flex;gap:14px;align-items:baseline;font:400 20px/1.4 var(--f);color:var(--ink2);margin-top:10px}
 .pend li::before{content:"";flex:none;width:14px;height:14px;border:2px solid var(--signal);transform:translateY(1px)}
 .closing{background:var(--cobalt);color:#fff;padding:36px 40px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
@@ -243,9 +245,8 @@ html.static .rv,html.static .bar .fl,html.static .decay i{animation:none!importa
 <section class="slide s-cover" data-label="Oportunidad" data-nohead="1" data-notes="(0:20) En Chile, entre 2023 y 2024, las instituciones financieras recibieron 1,3 millones de reclamos por operaciones que el cliente no reconoce. Una parte son cobros que se repiten todos los meses sin que nadie los mire: renovaciones, alzas, pruebas gratis que pasan a pago. Somos CONDOR, y nuestra oportunidad es esta: que ninguna suscripción se cobre sin que la persona la vea, desde el primer cobro y dentro de la app de su banco.">
   <div class="l">
     <span class="mark rv"><svg viewBox="0 0 120 40"><use href="#condor"/></svg>CONDOR</span>
-    <div class="meta rv" style="--d:80ms">ING2030 · Entrega 2 · <span class="tbd">Grupo GXX</span></div>
     <h1 class="rv" style="--d:160ms">Que ninguna<br>suscripción se<br>cobre sin que<br>la veas.</h1>
-    <div class="meta rv" style="--d:300ms"><span class="tbd">Integrantes del equipo</span></div>
+    <div class="team rv" style="--d:300ms"><b>Grupo 68</b><span>Agustín Tupper · Baltazar Herreros · Benjamin Garrido · Florencia Candia · Nicolás Covarrubias</span></div>
   </div>
   <div class="r">
     <div class="ledger rv" style="--d:250ms" aria-label="Cobros de una cuenta de ejemplo">

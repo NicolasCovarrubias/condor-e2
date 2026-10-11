@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CONDOR · Entrega 2</title>
+<meta name="description" content="CONDOR: tus suscripciones a la vista desde el primer cobro, dentro de la app del banco. Presentación Entrega 2, ING2030 UC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Deck 16:9 autorado a 1920x1080 y escalado al viewport. Estilo de grilla suiza: grotesca negra, un solo color plano (cobalto) en bloques, naranja solo para alertas. Detalle en notas (tecla N). */
+:root{
+  --paper:#F4F4F1; --white:#FFFFFF; --ink:#0E0E0E; --ink2:#3A3A38; --gray:#76766F; --line:#D9D8D2;
+  --cobalt:#2340F5; --cobalt-soft:#E6EAFE;
+  --signal:#FF5B1A; --signal-soft:#FFE9DF;
+  --ok:#138A55;
+  --bar:#C9C9C2;
+  --f:'Archivo',system-ui,sans-serif;
+  --m:'IBM Plex Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#E4E4DF;color:var(--ink);font-family:var(--f);-webkit-font-smoothing:antialiased;overflow:hidden}
+b,strong{font-weight:700}
+
+/* ---------- Escenario ---------- */
+.viewport{position:fixed;inset:0;overflow:hidden}
+.deck{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--s,.5));transform-origin:center}
+.slide{position:absolute;inset:0;padding:176px 120px 100px;display:flex;flex-direction:column;background:var(--paper);opacity:0;visibility:hidden;transition:opacity .45s ease,visibility 0s linear .45s;overflow:hidden}
+.slide.active{opacity:1;visibility:visible;transition:opacity .45s ease}
+.slide > *{position:relative}
+
+/* Cabecera: índice en bloque cobalto + sección + marca, con regla negra */
+.head{position:absolute!important;top:44px;left:120px;right:120px;height:58px;display:flex;align-items:center;justify-content:space-between}
+.head .idx{display:flex;align-items:center;gap:20px;font:500 15px var(--m);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.head .idx b{width:58px;height:58px;background:var(--cobalt);color:#fff;display:flex;align-items:center;justify-content:center;font:600 20px var(--m);letter-spacing:0}
+.mark{display:flex;align-items:center;gap:12px;font:800 20px var(--f);font-stretch:125%;letter-spacing:.06em}
+.mark svg{width:42px;height:15px}
+.rule{position:absolute!important;top:126px;left:120px;right:120px;height:2px;background:var(--ink)}
+.foot{position:absolute!important;left:120px;right:120px;bottom:38px;display:flex;justify-content:space-between;gap:40px;font:400 13px/1.5 var(--m);color:var(--gray)}
+
+/* Tipografía */
+h1{font:800 124px/.94 var(--f);font-stretch:92%;letter-spacing:-.035em}
+h2{font:800 72px/1.0 var(--f);font-stretch:96%;letter-spacing:-.03em;max-width:1560px}
+.kick{font:500 15px var(--m);letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
+.num{font:800 160px/.86 var(--f);font-stretch:68%;letter-spacing:-.02em}
+.cap{font:400 22px/1.4 var(--f);color:var(--ink2)}
+sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
+/* Contenido pendiente del equipo: visible a propósito */
+.tbd{display:inline-block;border:1.5px dashed var(--signal);background:var(--signal-soft);color:#B23A0B;padding:0 9px;font:500 .78em/1.65 var(--m);white-space:nowrap}
+
+/* Revelado */
+.rv{opacity:0}
+.slide.active .rv{animation:rise .7s var(--ease) both;animation-delay:var(--d,0ms)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ---------- 01 Portada ---------- */
+.s-cover{padding:0;display:grid;grid-template-columns:1fr 720px}
+.s-cover .l{padding:150px 100px 100px 120px;display:flex;flex-direction:column}
+.s-cover .l .mark{margin-bottom:auto}
+.s-cover h1{margin:26px 0 40px}
+.s-cover .meta{display:flex;gap:14px;align-items:center;font:500 16px var(--m);color:var(--gray);letter-spacing:.06em;text-transform:uppercase}
+.s-cover .r{background:var(--cobalt);display:flex;align-items:center;justify-content:center;padding:80px}
+.ledger{width:100%;background:var(--white);box-shadow:0 30px 60px rgba(0,0,30,.25)}
+.ledger .hd{display:flex;justify-content:space-between;padding:22px 28px;border-bottom:2px solid var(--ink);font:600 13px var(--m);letter-spacing:.1em;text-transform:uppercase}
+.lrow{display:grid;grid-template-columns:1fr auto;gap:6px 16px;padding:22px 28px;border-bottom:1px solid var(--line);align-items:center}
+.lrow:last-child{border-bottom:none}
+.lrow .m{font:700 22px var(--f)}
+.lrow .a{font:500 21px var(--m);text-align:right}
+.tag{display:inline-block;font:600 12px var(--m);letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;justify-self:start}
+.tag.k{background:#EDEDE8;color:var(--ink2)} .tag.c{background:var(--cobalt);color:#fff} .tag.s{background:var(--signal);color:#fff} .tag.g{background:transparent;color:var(--gray);padding-left:0}
+.lrow .d{font:400 15px var(--m);color:var(--gray);text-align:right}
+
+/* ---------- 02 Problema ---------- */
+.duo{flex:1;display:grid;grid-template-columns:1fr 1fr;margin-top:36px;border-top:1px solid var(--line)}
+.duo > div{padding:44px 60px 0 0;display:flex;flex-direction:column}
+.duo > div + div{padding:44px 0 0 60px;border-left:1px solid var(--line)}
+.duo .who{font:700 36px/1.1 var(--f);margin:12px 0 30px}
+.duo .num.s{color:var(--signal)}
+.duo .cap{margin-top:20px;max-width:620px}
+.bridge{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);background:var(--cobalt);color:#fff;padding:20px 28px;text-align:center;width:420px;font:500 19px/1.4 var(--f)}
+.bridge b{display:block;font:600 14px var(--m);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.valid{margin-top:26px;display:flex;gap:14px;align-items:center;font:400 19px var(--f);color:var(--gray)}
+
+/* ---------- 03 Viaje ---------- */
+.shifts{margin:auto 0;border-top:2px solid var(--ink)}
+.shift{display:grid;grid-template-columns:70px 1fr 70px 1.15fr 300px;align-items:center;border-bottom:1px solid var(--line);padding:30px 0}
+.shift .i{font:500 16px var(--m);color:var(--gray)}
+.shift .was{font:600 34px/1.15 var(--f);color:var(--gray);text-decoration:line-through;text-decoration-thickness:2px}
+.shift .ar{width:40px;height:40px;background:var(--cobalt);color:#fff;display:flex;align-items:center;justify-content:center;font:700 22px var(--f)}
+.shift .now{font:800 38px/1.1 var(--f);font-stretch:96%;letter-spacing:-.01em}
+.shift .ev{text-align:right;font:400 15px/1.5 var(--m);color:var(--gray)}
+
+/* ---------- 04 Solución ---------- */
+.flow{flex:1;display:grid;grid-template-columns:repeat(3,1fr) 1.3fr;align-items:center;margin-top:10px}
+.node{position:relative;padding-right:44px}
+.node .n{width:76px;height:76px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font:600 24px var(--m);margin-bottom:26px;position:relative;z-index:1}
+.node.c .n{background:var(--cobalt)}
+.node::after{content:"";position:absolute;top:38px;left:76px;right:0;height:2px;background:var(--ink)}
+.node h4{font:800 36px/1.05 var(--f);font-stretch:94%;letter-spacing:-.015em;margin-bottom:12px}
+.node p{font:400 19px/1.45 var(--f);color:var(--gray);max-width:300px;min-height:56px}
+.outs{border:2px solid var(--ink);background:var(--white)}
+.out{display:grid;grid-template-columns:56px 1fr;align-items:center;gap:18px;padding:20px 24px;border-bottom:1px solid var(--line)}
+.out:last-child{border-bottom:none}
+.out i{width:56px;height:56px;display:flex;align-items:center;justify-content:center;font:700 22px var(--f);font-style:normal}
+.out b{display:block;font:800 26px/1.15 var(--f);font-stretch:96%}
+.out span{font:400 15px var(--m);color:var(--gray)}
+.out.k i{background:var(--cobalt);color:#fff} .out.q i{background:#EDEDE8;color:var(--ink)} .out.s i{background:var(--signal);color:#fff}
+.next{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;border-top:1px solid var(--line);padding-top:24px}
+.next .kick{color:var(--cobalt)}
+.next p{font:400 21px/1.4 var(--f);color:var(--ink2)}
+
+/* ---------- 05 Estado del arte ---------- */
+.sota{margin-top:40px;border-top:2px solid var(--ink)}
+.srow{display:grid;grid-template-columns:420px 200px 190px 1fr;align-items:center;border-bottom:1px solid var(--line);padding:22px 0}
+.srow.h{padding:14px 0;font:500 13px var(--m);letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
+.srow .nm{font:700 25px var(--f)}
+.srow .nm small{display:block;font:400 14px var(--m);color:var(--gray);margin-top:4px}
+.srow .w{font:400 17px var(--m);color:var(--ink2)}
+.srow .how{font:400 21px/1.35 var(--f);color:var(--ink2)}
+.yes{display:inline-flex;width:30px;height:30px;background:var(--ink);color:#fff;align-items:center;justify-content:center;font:700 16px var(--f)}
+.no{display:inline-flex;width:30px;height:30px;border:2px solid var(--bar);color:var(--gray);align-items:center;justify-content:center;font:700 16px var(--f)}
+.srow.us{background:var(--cobalt);color:#fff;margin:0 -24px;padding:26px 24px;border-bottom:none}
+.srow.us .nm,.srow.us .how,.srow.us .w{color:#fff}
+.srow.us .yes{background:#fff;color:var(--cobalt)}
+.diff{margin-top:auto;padding-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.diff .kick{display:block;margin-bottom:10px}
+.diff p{font:700 28px/1.2 var(--f);font-stretch:96%}
+
+/* ---------- 06 Flujo del prototipo (capturas reales) ---------- */
+.steps{flex:1;margin-top:34px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:28px 44px;min-height:0}
+.step{display:grid;grid-template-rows:auto 1fr;gap:14px;min-height:0}
+.step .t{display:flex;align-items:baseline;gap:16px}
+.step .t b{font:800 52px/.8 var(--f);font-stretch:68%;color:var(--cobalt)}
+.step .t span{font:800 28px/1.1 var(--f);font-stretch:96%}
+.step .t em{font-style:normal;margin-left:auto;font:400 14px var(--m);color:var(--gray)}
+.shot{background:#F5F7FA;border:1.5px solid var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden;min-height:0;padding:8px}
+.shot img{display:block;max-width:100%;max-height:100%;object-fit:contain}
+.shot.top{padding:0;justify-content:flex-start}
+.shot.top img{width:100%;max-height:none;height:100%;object-fit:cover;object-position:top}
+.shot .via{font:600 12px var(--m);letter-spacing:.1em;text-transform:uppercase;color:var(--cobalt);margin:8px 0}
+
+/* ---------- 07 Testeo ---------- */
+.body2{flex:1;display:grid;grid-template-columns:480px 1fr;gap:100px;margin-top:40px;min-height:0}
+.dq{font:500 15px var(--m);letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt);margin-bottom:18px}
+.score .num{color:var(--ink);font-size:200px}
+.score .cap{margin-top:14px;max-width:440px}
+.users{margin-top:44px;padding-top:24px;border-top:2px solid var(--ink)}
+.users .row{display:flex;gap:30px;margin-top:14px}
+.users .row div{font:800 48px/1 var(--f);font-stretch:68%;color:#B23A0B}
+.users .row span{display:block;font:400 14px var(--m);color:var(--gray);margin-top:6px}
+.chart .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
+.legend{display:flex;gap:20px;font:400 14px var(--m);color:var(--gray)}
+.legend i{display:inline-block;width:12px;height:12px;margin-right:7px;vertical-align:-1px}
+.bars{display:grid;gap:9px}
+.bar{display:grid;grid-template-columns:170px 1fr 70px;align-items:center;gap:18px;font:500 18px var(--f);color:var(--ink2)}
+.bar .tr{height:22px;position:relative}
+.bar .fl{position:absolute;left:0;top:0;bottom:0;transform-origin:left}
+.slide.active .bar .fl{animation:grow .9s var(--ease) both;animation-delay:var(--d,0ms)}
+.bar .val{font:500 16px var(--m);text-align:right;color:var(--gray)}
+.bar.sub .fl{background:var(--cobalt)} .bar.bill .fl{background:var(--ink)} .bar.non .fl{background:var(--bar)}
+.bar.hl{color:var(--ink);font-weight:700} .bar.hl .val{color:var(--ink)}
+.hlbox{position:relative;margin:16px 0 46px}
+.hlbox::before{content:"";position:absolute;left:-14px;right:-14px;top:-9px;bottom:-9px;border:2px solid var(--signal)}
+.hlbox .note{position:absolute;right:-14px;bottom:-40px;background:var(--signal);color:#fff;font:600 13px var(--m);letter-spacing:.06em;text-transform:uppercase;padding:5px 10px}
+.hlbox .bars{position:relative}
+
+/* ---------- 08 Oportunidad ---------- */
+.tl{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink)}
+.tl div{padding:26px 40px 0 0}
+.tl b{display:inline-block;background:var(--cobalt);color:#fff;font:600 16px var(--m);padding:6px 10px;margin-bottom:16px}
+.tl p{font:700 30px/1.15 var(--f);font-stretch:96%;max-width:470px}
+.stats{margin-top:auto;display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:60px}
+.stat .num{font-size:128px}
+.stat .cap{margin-top:12px;font-size:20px}
+.decay{display:flex;align-items:center;gap:12px;margin-top:12px;font:400 14px var(--m);color:var(--gray)}
+.decay i{display:block;height:12px;transform-origin:left}
+.slide.active .decay i{animation:grow .9s var(--ease) both;animation-delay:var(--d,0ms)}
+
+/* ---------- 09 MVP ---------- */
+.road{margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink)}
+.road > div{padding:28px 36px 0 0;position:relative}
+.road .n{display:inline-flex;width:48px;height:48px;background:var(--ink);color:#fff;align-items:center;justify-content:center;font:600 18px var(--m);margin-bottom:20px}
+.road > div:last-child .n{background:var(--cobalt)}
+.road h4{font:800 34px/1.05 var(--f);font-stretch:94%;margin-bottom:10px}
+.road p{font:400 19px/1.45 var(--f);color:var(--gray);max-width:330px}
+.end{margin-top:auto;display:grid;grid-template-columns:1fr 760px;gap:70px;align-items:stretch}
+.pend .kick{display:block;margin-bottom:14px;color:#B23A0B}
+.pend li{list-style:none;display:flex;gap:14px;align-items:baseline;font:400 20px/1.4 var(--f);color:var(--ink2);margin-top:10px}
+.pend li::before{content:"";flex:none;width:14px;height:14px;border:2px solid var(--signal);transform:translateY(1px)}
+.closing{background:var(--cobalt);color:#fff;padding:36px 40px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+.closing svg{width:96px;height:34px;color:#fff}
+.closing p{font:800 46px/1.02 var(--f);font-stretch:94%;letter-spacing:-.02em}
+
+/* ---------- Anexos ---------- */
+.annex h2{font-size:56px}
+.refs{margin-top:32px;columns:2;column-gap:70px;font:400 16.5px/1.5 var(--f);color:var(--ink2)}
+.refs li{list-style:none;break-inside:avoid;margin-bottom:14px;display:grid;grid-template-columns:46px 1fr}
+.refs li span{font:600 14px var(--m);color:var(--cobalt)}
+.refs a{color:var(--cobalt);text-decoration:none;word-break:break-all;font:400 13.5px var(--m)}
+.ia{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:70px}
+.ia p{font:400 23px/1.55 var(--f);color:var(--ink2);margin-top:14px}
+
+/* ---------- HUD y notas ---------- */
+.hud{position:fixed;right:16px;bottom:14px;display:flex;gap:6px;z-index:20;opacity:0;transition:opacity .3s ease}
+body.show-hud .hud{opacity:1}
+.hud button{width:34px;height:34px;border:1.5px solid var(--ink);background:rgba(255,255,255,.95);color:var(--ink);cursor:pointer;font:600 14px var(--m)}
+.hud button:hover{background:var(--ink);color:#fff}
+.notes{position:fixed;left:0;right:0;bottom:0;max-height:40vh;overflow:auto;z-index:30;background:#fff;border-top:2px solid var(--ink);padding:18px 26px 22px;display:none;font:400 17px/1.6 var(--f);color:var(--ink2)}
+body.show-notes .notes{display:block}
+.notes .nh{display:flex;justify-content:space-between;align-items:center;gap:20px;font:600 12.5px var(--m);letter-spacing:.08em;text-transform:uppercase;color:var(--cobalt);margin-bottom:8px}
+.notes .keys{color:var(--gray);text-transform:none;font-weight:400}
+.notes .timer{color:var(--ink)}
+
+/* ---------- Impresión / PDF: una lámina por página ---------- */
+@page{size:1920px 1080px;margin:0}
+@media print{
+  html,body{overflow:visible;height:auto;background:var(--paper)}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .viewport{position:static;overflow:visible}
+  .deck{position:static;transform:none!important;width:1920px;height:auto}
+  .slide{position:relative;inset:auto;width:1920px;height:1080px;opacity:1!important;visibility:visible!important;break-after:page;page-break-after:always;transition:none}
+  .rv,.bar .fl,.decay i{animation:none!important;opacity:1!important;transform:none!important}
+  .hud,.notes{display:none!important}
+}
+/* Modo ?static: mismo estado final que el PDF */
+html.static .rv,html.static .bar .fl,html.static .decay i{animation:none!important;opacity:1!important}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="condor" viewBox="0 0 120 40">
+    <path fill="currentColor" d="M56 14 C44 8 26 5 10 6 L2 8 L10 10 L3 13 L11 14 L5 18 L14 18 C28 19 44 21 54 24 L60 30 L66 24 C76 21 92 19 106 18 L115 18 L109 14 L117 13 L110 10 L118 8 L110 6 C94 5 76 8 64 14 Q60 4 56 14 Z"/>
+  </symbol>
+</svg>
+
+<div class="viewport"><div class="deck" id="deck">
+
+<!-- ======================= 01 PORTADA ======================= -->
+<section class="slide s-cover" data-label="Oportunidad" data-nohead="1" data-notes="(0:20) En Chile, entre 2023 y 2024, las instituciones financieras recibieron 1,3 millones de reclamos por operaciones que el cliente no reconoce. Una parte son cobros que se repiten todos los meses sin que nadie los mire: renovaciones, alzas, pruebas gratis que pasan a pago. Somos CONDOR, y nuestra oportunidad es esta: que ninguna suscripción se cobre sin que la persona la vea, desde el primer cobro y dentro de la app de su banco.">
+  <div class="l">
+    <span class="mark rv"><svg viewBox="0 0 120 40"><use href="#condor"/></svg>CONDOR</span>
+    <div class="meta rv" style="--d:80ms">ING2030 · Entrega 2 · <span class="tbd">Grupo GXX</span></div>
+    <h1 class="rv" style="--d:160ms">Que ninguna<br>suscripción se<br>cobre sin que<br>la veas.</h1>
+    <div class="meta rv" style="--d:300ms"><span class="tbd">Integrantes del equipo</span></div>
+  </div>
+  <div class="r">
+    <div class="ledger rv" style="--d:250ms" aria-label="Cobros de una cuenta de ejemplo">
+      <div class="hd"><span>Cobros de octubre</span><span>CONDOR</span></div>
+      <div class="lrow"><span class="m">NETFLIX.COM</span><span class="a">$10.090</span><span class="tag k">Suscripción</span><span class="d">mensual</span></div>
+      <div class="lrow"><span class="m">FITNESS CLUB</span><span class="a">$29.249</span><span class="tag c">Nueva suscripción</span><span class="d">1er cobro</span></div>
+      <div class="lrow"><span class="m">SPOTIFY</span><span class="a">$6.490</span><span class="tag s">Subió 22,7%</span><span class="d">antes $5.290</span></div>
+      <div class="lrow"><span class="m">UBER *TRIP</span><span class="a">$4.380</span><span class="tag g">Compra puntual</span><span class="d"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 02 PROBLEMA ======================= -->
+<section class="slide" data-label="Problema" data-notes="(0:45) Separamos a quién le duele de quién paga. Lo sufre el titular de la cuenta: tiene varias suscripciones y se entera de la renovación o del alza cuando la plata ya salió. El SERNAC recibe del orden de 37 mil reclamos al año por cobros indebidos en el mercado financiero, y casos como Rappi en 2024 muestran membresías cobradas a gente que dice no haberlas contratado. Pero quien paga es el banco: por la Ley 20.009 y sus reformas, lo que el cliente no reconoce, el banco lo debe devolver. Solo en marzo de 2024 la banca perdió 72 mil millones de pesos por fraude externo. Ese es el puente: el dolor del usuario se convierte en costo para el banco. [Decir aquí con cuántas personas y con quién de la banca lo validamos.]">
+  <h2 class="rv">Te enteras del cobro cuando la plata ya salió.</h2>
+  <div class="duo rv" style="--d:150ms">
+    <div>
+      <span class="kick">Lo sufre</span>
+      <div class="who">El titular de la cuenta</div>
+      <div class="num">~37 mil</div>
+      <div class="cap">reclamos al año por cobros indebidos en el mercado financiero<sup class="r">1</sup></div>
+    </div>
+    <div>
+      <span class="kick">Lo paga</span>
+      <div class="who">El banco emisor</div>
+      <div class="num s">$72.000 MM</div>
+      <div class="cap">perdidos por fraude externo en un solo mes, marzo de 2024<sup class="r">3</sup></div>
+    </div>
+    <p class="bridge"><b>Ley 20.009</b>lo que el cliente no reconoce, el banco lo devuelve</p>
+  </div>
+  <div class="valid rv" style="--d:400ms">Validado con <span class="tbd">[N] usuarios</span> <span class="tbd">[N] personas de banca</span></div>
+  <div class="foot"><span>[1] SERNAC, Ranking Financiero 2022, estimación anual del equipo · [3] CMF, Nota Técnica Ley de Fraudes, oct-2025</span></div>
+</section>
+
+<!-- ======================= 03 VIAJE ======================= -->
+<section class="slide" data-label="Viaje" data-notes="(0:30) Llegar aquí no fue lineal. Partimos queriendo detener cualquier cobro; al revisar cómo funciona en la red vimos que bloquear cobros recurrentes existe (Visa lo ofrece a los bancos), pero retener y aprobar cada cobro no es estándar, así que hoy el foco es ver y avisar, y detener queda como siguiente paso a validar con un banco. [Fila 2: contar con la evidencia de entrevistas; confirmar.] Al simular aprendimos que ni el nombre del comercio ni la tarjeta guardada sirven: Uber guarda tu tarjeta y no es suscripción, y Jumbo se repite en el 86% de los clientes. Lo que distingue una suscripción es la regularidad. Y como el sistema se puede equivocar, cuando duda le pregunta al usuario.">
+  <h2 class="rv">Lo que cambiamos en el camino.</h2>
+  <div class="shifts rv" style="--d:150ms">
+    <div class="shift"><span class="i">01</span><span class="was">Detener cualquier cobro</span><span class="ar">→</span><span class="now">Ver y avisar primero</span><span class="ev">Feedback del equipo<br>+ Visa Stop Payment Service<sup class="r">13</sup></span></div>
+    <div class="shift"><span class="i">02</span><span class="was">Que pague el usuario</span><span class="ar">→</span><span class="now">Que pague el banco</span><span class="ev"><span class="tbd">entrevistas</span> + Ley 20.009</span></div>
+    <div class="shift"><span class="i">03</span><span class="was">Reconocer por el nombre</span><span class="ar">→</span><span class="now">Reconocer por la regularidad</span><span class="ev">Simulación<br>11.384 cobros</span></div>
+    <div class="shift"><span class="i">04</span><span class="was">Que el sistema decida solo</span><span class="ar">→</span><span class="now">Que pregunte cuando duda</span><span class="ev">Gemelo digital</span></div>
+  </div>
+  <div class="foot"><span>Filas 03 y 04: documentadas en el filtro y el dataset del prototipo.</span></div>
+</section>
+
+<!-- ======================= 04 SOLUCIÓN ======================= -->
+<section class="slide" data-label="Solución" data-notes="(0:45) CONDOR vive dentro de la app del banco. El dato ya existe: cada cobro trae comercio, categoría (MCC), monto y señales de la red. El primer motor pregunta si ese comercio va a volver a cobrar, mirando cómo se comporta con todos los clientes del banco: repetición, regularidad y monto. Por eso reconoce la suscripción desde el primer cobro del cliente. El segundo clasifica si es suscripción, cuenta o algo incierto. Con eso actúa: si está seguro, la suma a tu lista; si duda, te pregunta; y si una suscripción sube de precio, te avisa. Detener el cobro antes de que ocurra es el siguiente paso: es técnicamente posible para el banco, pero hay que validarlo con un emisor. Si el sistema se equivoca, el costo es una pregunta de más, no plata perdida.">
+  <h2 class="rv">Todas tus suscripciones a la vista, desde el primer cobro.</h2>
+  <div class="flow">
+    <div class="node rv" style="--d:150ms"><div class="n">01</div><h4>Llega un cobro</h4><p>comercio · categoría (MCC) · monto · señales de la red</p></div>
+    <div class="node c rv" style="--d:280ms"><div class="n">02</div><h4>¿Volverá a cobrar?</h4><p>cómo cobra ese comercio a todos los clientes del banco</p></div>
+    <div class="node c rv" style="--d:410ms"><div class="n">03</div><h4>¿Qué tipo es?</h4><p>suscripción, cuenta o incierto</p></div>
+    <div class="outs rv" style="--d:540ms">
+      <div class="out k"><i>+</i><div><b>La suma a tu lista</b><span>confianza alta</span></div></div>
+      <div class="out q"><i>?</i><div><b>Te pregunta</b><span>confianza intermedia</span></div></div>
+      <div class="out s"><i>↑</i><div><b>Te avisa si sube</b><span>cambio de precio</span></div></div>
+    </div>
+  </div>
+  <div class="next rv" style="--d:680ms"><span class="kick">Siguiente paso</span><p>Detener el cobro antes de que ocurra: los bancos ya pueden bloquear cobros recurrentes con Visa<sup class="r">13</sup>. Falta validarlo con un emisor.</p></div>
+  <div class="foot"><span>Lógica y umbrales: código del prototipo CONDOR.</span></div>
+</section>
+
+<!-- ======================= 05 ESTADO DEL ARTE ======================= -->
+<section class="slide" data-label="Estado del arte" data-notes="(0:30) Ver suscripciones ya existe, y eso es buena noticia: confirma el problema. En Chile, BancoEstado tiene 'Mis Suscripciones', pero solo muestra comercios que usan tarjeta tokenizada. Nubank lanzó en Brasil un gestor; Visa anunció uno para bancos que parte en Norteamérica y luego llega a Latinoamérica, con gestión en comercios asociados; y Rocket Money es otra app que lee tu historial. La diferencia de CONDOR está en cómo reconoce: no depende de que el comercio se declare, aprende de cómo cobra ese comercio a todos los clientes del banco, y lo hace desde el primer cobro. Lo difícil de copiar es ese modelo, que mejora con cada cliente.">
+  <h2 class="rv">Ver suscripciones ya existe. Lo nuevo es cómo se reconocen.</h2>
+  <div class="sota rv" style="--d:150ms">
+    <div class="srow h"><span>Alternativa</span><span>Dónde</span><span>Dentro del banco</span><span>Cómo reconoce la suscripción</span></div>
+    <div class="srow"><span class="nm">BancoEstado<small>Mis Suscripciones</small></span><span class="w">Chile, hoy</span><span><span class="yes">✓</span></span><span class="how">Solo comercios con tarjeta tokenizada<sup class="r">12</sup></span></div>
+    <div class="srow"><span class="nm">Nubank<small>Gestor de suscripciones</small></span><span class="w">Brasil, 2025</span><span><span class="yes">✓</span></span><span class="how">Cobros recurrentes de la tarjeta<sup class="r">7</sup></span></div>
+    <div class="srow"><span class="nm">Visa<small>Subscription Manager</small></span><span class="w">2026 → LatAm</span><span><span class="yes">✓</span></span><span class="how">Gestión en 100+ comercios asociados<sup class="r">6</sup></span></div>
+    <div class="srow"><span class="nm">Rocket Money<small>app aparte</small></span><span class="w">EE.UU.</span><span><span class="no">✕</span></span><span class="how">Historial de cuentas vinculadas<sup class="r">8</sup></span></div>
+    <div class="srow us"><span class="nm">CONDOR</span><span class="w">Prototipo</span><span><span class="yes">✓</span></span><span class="how">Cómo cobra el comercio a todo el banco, desde el 1er cobro</span></div>
+  </div>
+  <div class="diff">
+    <div class="rv" style="--d:350ms"><span class="kick">Diferencia de fondo</span><p>No depende de que el comercio se declare: aprende de cómo cobra.</p></div>
+    <div class="rv" style="--d:450ms"><span class="kick">Difícil de copiar</span><p>El modelo de comercios mejora con cada cliente del banco.</p></div>
+  </div>
+  <div class="foot"><span>[6] Visa, mar-2026 · [7] Nubank, dic-2025 · [8] rocketmoney.com · [12] BancoEstado, Mis Suscripciones</span></div>
+</section>
+
+<!-- ======================= 06 FLUJO DEL PROTOTIPO ======================= -->
+<section class="slide" data-label="Prototipo" data-notes="(0:50) Así funciona el prototipo, con pantallas reales del gemelo digital. Uno: llega el primer cobro de Fitness Club; la app todavía no lo conoce, y CONDOR lo reconoce como suscripción desde ese primer cobro. Dos: cuando la evidencia no alcanza, como en este gimnasio con 82% de confianza, no decide solo: te pregunta si lo reconoces, con tres opciones. Tres: todas tus suscripciones quedan a la vista, cada una supervisada o de confianza. Cuatro: si una suscripción supervisada sube de precio, como Spotify de 5.290 a 6.490, te avisa; en el prototipo además el cobro espera tu decisión, pero en un banco real eso depende del emisor. Lo real: el filtro, la lógica y la app. Lo simulado: las transacciones y la conexión con un banco.">
+  <h2 class="rv">Así funciona el prototipo.</h2>
+  <div class="steps">
+    <div class="step rv" style="--d:150ms">
+      <div class="t"><b>1</b><span>Llega el primer cobro y lo reconoce</span></div>
+      <div class="shot"><img src="../../img/p1a_cobro.png" alt="Primer cobro de FITNESS CLUB por $29.249, aún sin clasificar"><span class="via">↓ CONDOR</span><img src="../../img/p1b_detectada.png" alt="Detectamos una nueva suscripción: FITNESS CLUB"></div>
+    </div>
+    <div class="step rv" style="--d:300ms">
+      <div class="t"><b>2</b><span>Si duda, te pregunta</span></div>
+      <div class="shot"><img src="../../img/p2_pregunta.png" alt="Posible suscripción detectada, con opciones Sí, No estoy seguro y No"></div>
+    </div>
+    <div class="step rv" style="--d:450ms">
+      <div class="t"><b>3</b><span>Todas tus suscripciones a la vista</span></div>
+      <div class="shot top"><img src="../../img/p3b_lista.png" alt="Lista de suscripciones activas: Spotify supervisada, Netflix de confianza"></div>
+    </div>
+    <div class="step rv" style="--d:600ms">
+      <div class="t"><b>4</b><span>Te avisa si sube el precio</span><em>en el prototipo, el cobro espera tu decisión</em></div>
+      <div class="shot"><img src="../../img/p4_alza.png" alt="Spotify: cambio de precio detectado de $5.290 a $6.490"></div>
+    </div>
+  </div>
+  <div class="foot"><span>Capturas reales del gemelo digital (Streamlit). Real: filtro, lógica y app. Simulado: transacciones y conexión con un banco.</span><span>En vivo: <span class="tbd">link Streamlit</span></span></div>
+</section>
+
+<!-- ======================= 07 TESTEO ======================= -->
+<section class="slide" data-label="Testeo" data-notes="(0:35) Prototipamos donde estaba la duda. Duda uno: ¿se puede reconocer una suscripción desde el primer cobro? En simulación, con 11.384 cobros sintéticos de 2.876 clientes, el filtro clasificó bien los 11 comercios desde el primer cobro de un cliente nuevo. El gráfico muestra el aprendizaje: Fitness Club, Jumbo y Uber se repiten casi igual, pero solo uno es suscripción; lo que los separa es la regularidad. Ojo: son datos sintéticos; validan la lógica, no la precisión bancaria real. Duda dos: ¿el titular entiende lo que CONDOR le muestra? [completar con número de personas, qué entendieron, cuánto se demoraron y qué cambiamos en la app].">
+  <h2 class="rv">Repetir no basta: lo que separa es la regularidad.</h2>
+  <div class="body2">
+    <div>
+      <div class="score rv" style="--d:150ms"><div class="dq">Duda 1 · ¿Se reconoce desde el 1er cobro?</div><div class="num">11/11</div><div class="cap">comercios bien clasificados en simulación (11.384 cobros sintéticos)</div></div>
+      <div class="users rv" style="--d:350ms"><div class="dq" style="margin:0">Duda 2 · ¿El titular lo entiende?</div><span class="tbd" style="margin-top:12px">[N] personas usaron el gemelo</span>
+        <div class="row"><div>[x/N]<span>entendió qué detectó CONDOR</span></div><div>[t] s<span>hasta decidir</span></div></div>
+      </div>
+    </div>
+    <div class="chart rv" style="--d:250ms">
+      <div class="top"><span class="kick">% de clientes que repite el pago</span><span class="legend"><span><i style="background:var(--cobalt)"></i>Suscripción</span><span><i style="background:var(--ink)"></i>Cuenta</span><span><i style="background:var(--bar)"></i>No recurrente</span></span></div>
+      <div class="bars">
+        <div class="bar bill"><span>Seguro Auto</span><div class="tr"><div class="fl" style="width:98.6%;--d:300ms"></div></div><span class="val">98,6%</span></div>
+        <div class="bar bill"><span>Electricidad</span><div class="tr"><div class="fl" style="width:97.9%;--d:340ms"></div></div><span class="val">97,9%</span></div>
+        <div class="bar sub"><span>Spotify</span><div class="tr"><div class="fl" style="width:95.8%;--d:380ms"></div></div><span class="val">95,8%</span></div>
+        <div class="bar sub"><span>Netflix</span><div class="tr"><div class="fl" style="width:95.5%;--d:420ms"></div></div><span class="val">95,5%</span></div>
+        <div class="bar bill"><span>Agua</span><div class="tr"><div class="fl" style="width:93.8%;--d:460ms"></div></div><span class="val">93,8%</span></div>
+        <div class="bar sub"><span>Adobe</span><div class="tr"><div class="fl" style="width:92.6%;--d:500ms"></div></div><span class="val">92,6%</span></div>
+      </div>
+      <div class="hlbox">
+        <div class="bars">
+          <div class="bar sub hl"><span>Fitness Club</span><div class="tr"><div class="fl" style="width:89.2%;--d:540ms"></div></div><span class="val">89,2%</span></div>
+          <div class="bar non hl"><span>Jumbo</span><div class="tr"><div class="fl" style="width:86.2%;--d:580ms"></div></div><span class="val">86,2%</span></div>
+          <div class="bar non hl"><span>Uber</span><div class="tr"><div class="fl" style="width:84.2%;--d:620ms"></div></div><span class="val">84,2%</span></div>
+        </div>
+        <span class="note">Casi igual, distinto tipo</span>
+      </div>
+      <div class="bars">
+        <div class="bar non"><span>Starbucks</span><div class="tr"><div class="fl" style="width:74%;--d:660ms"></div></div><span class="val">74,0%</span></div>
+        <div class="bar non"><span>Amazon</span><div class="tr"><div class="fl" style="width:53.6%;--d:700ms"></div></div><span class="val">53,6%</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Dataset sintético del prototipo: 2.876 clientes, 11 comercios. Valida la lógica, no la precisión bancaria real.</span></div>
+</section>
+
+<!-- ======================= 08 OPORTUNIDAD ======================= -->
+<section class="slide" data-label="Oportunidad" data-notes="(0:35) ¿Por qué ahora? En 2020 la Ley 21.234 obligó al banco a devolver todo cargo no reconocido, y en 2023-2024 eso explotó en 1,3 millones de reclamos. La reforma de 2024 le dio herramientas al banco, pero el incentivo quedó claro: prevenir sale más barato que devolver. Y en 2025-2026 BancoEstado, Nubank y Visa ya ofrecen ver suscripciones: la demanda es real. Las pérdidas de la banca por fraude externo llegaron a 72 mil millones en un mes y en diciembre de 2024 seguían en 11 mil millones mensuales. Quien paga: las gerencias de riesgo operacional y canales digitales de 17 bancos y más de 10 emisores de retail financiero. Modelo: licencia por cuenta protegida. Pendiente: validar qué parte de esas pérdidas viene de cobros recurrentes y que el banco lo compraría a un tercero (los bancos ya compran motores antifraude a terceros). Segmento de entrada (hipótesis): emisores digitales con app propia.">
+  <h2 class="rv">Por qué ahora y quién paga.</h2>
+  <div class="tl rv" style="--d:150ms">
+    <div><b>2020</b><p>El banco debe devolver todo cargo no reconocido</p></div>
+    <div><b>2024</b><p>La reforma premia prevenir antes que devolver</p></div>
+    <div><b>2025–26</b><p>BancoEstado, Nubank y Visa ya muestran suscripciones</p></div>
+  </div>
+  <div class="stats">
+    <div class="stat rv" style="--d:300ms"><div class="num" style="color:var(--signal)">$72.000 MM</div><div class="cap">pérdida de la banca en un mes<sup class="r">3</sup></div><div class="decay"><i style="width:240px;background:var(--signal);--d:700ms"></i>mar-24</div><div class="decay"><i style="width:37px;background:var(--bar);--d:800ms"></i>dic-24 · aún $11.000 MM/mes</div></div>
+    <div class="stat rv" style="--d:400ms"><div class="num">17 + 10</div><div class="cap">bancos y emisores de retail financiero <span class="tbd">fuente</span></div></div>
+    <div class="stat rv" style="--d:500ms"><div class="num" style="color:var(--cobalt)">SaaS</div><div class="cap">licencia por cuenta protegida, pagada por Riesgo o Canales Digitales</div></div>
+  </div>
+  <div class="foot"><span>[3] CMF, Nota Técnica Ley de Fraudes (oct-2025) · Leyes 21.234 (2020) y 21.673 (2024) · [6] Visa · [7] Nubank · [12] BancoEstado</span></div>
+</section>
+
+<!-- ======================= 09 RUTA AL MVP ======================= -->
+<section class="slide" data-label="Ruta al MVP" data-notes="(0:15) Para pasar del gemelo digital a un MVP: datos reales de un emisor para calibrar umbrales, conectar el filtro a las autorizaciones del banco, un piloto de visibilidad con un emisor digital y, después, detener cobros, que ya es técnicamente posible con servicios como el de Visa, pero hay que validarlo con el emisor. Regulación: los datos no salen del banco; la Ley 21.719 de datos personales agrega requisitos, no lo bloquea (validar con asesoría legal). Lo pendiente lo declaramos aquí. CONDOR: cada suscripción a la vista desde el primer cobro. Gracias.">
+  <h2 class="rv">Del gemelo digital a un piloto.</h2>
+  <div class="road rv" style="--d:150ms">
+    <div><span class="n">01</span><h4>Datos reales</h4><p>calibrar umbrales con históricos de un emisor</p></div>
+    <div><span class="n">02</span><h4>Conexión al banco</h4><p>leer cada autorización en tiempo real</p></div>
+    <div><span class="n">03</span><h4>Piloto de visibilidad</h4><p>un emisor digital, <span class="tbd">[N] cuentas</span>, 3 meses</p></div>
+    <div><span class="n">04</span><h4>Detener cobros</h4><p>si el emisor lo permite: Visa ya ofrece bloquearlos<sup class="r">13</sup></p></div>
+  </div>
+  <div class="end">
+    <div class="pend rv" style="--d:350ms">
+      <span class="kick">Pendientes que declaramos</span>
+      <ul>
+        <li>Qué % de los reclamos de un banco viene de cobros recurrentes</li>
+        <li>Al menos 5 pruebas de usuario con el gemelo digital</li>
+        <li>Que el banco lo compraría a un tercero, y a qué precio</li>
+      </ul>
+    </div>
+    <div class="closing rv" style="--d:500ms">
+      <svg viewBox="0 0 120 40"><use href="#condor"/></svg>
+      <p>CONDOR: cada suscripción a la vista desde el primer cobro.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ANEXO A · FUENTES ======================= -->
+<section class="slide annex" data-label="Anexo · Fuentes" data-notes="Anexo: no se presenta. Fuentes completas de las cifras citadas.">
+  <h2 class="rv">Fuentes</h2>
+  <ol class="refs rv" style="--d:150ms">
+    <li><span>[1]</span><div>SERNAC, Ranking Financiero 2022: 19.370 reclamos por cobros (1er sem.) y 30,6% de 58.690 (2º sem.). Vía Diario Financiero y La Tercera. Total anual estimado por el equipo.<br><a href="https://www.df.cl/reclamos-contra-el-mercado-financiero-aumentan-11-y-superan-las-53-mil">df.cl/reclamos-contra-el-mercado-financiero-aumentan-11-y-superan-las-53-mil</a></div></li>
+    <li><span>[2]</span><div>SERNAC (jun-2025), estudio "Uso de Plataformas de Streaming en Chile": gasto promedio $22.809 al mes. Vía The Clinic.<br><a href="https://www.theclinic.cl/2025/06/12/estudio-revelo-que-el-gasto-promedio-mensual-de-los-chilenos-en-plataformas-de-streaming-alcanza-los-22-809/">theclinic.cl/2025/06/12/estudio-revelo-que-el-gasto-promedio-mensual…</a></div></li>
+    <li><span>[3]</span><div>Cortés, J. y Ormazábal, F. (oct-2025). Nota Técnica "Antecedentes sobre la aplicación de la Ley de Fraudes". CMF.<br><a href="https://www.cmfchile.cl/portal/estadisticas/617/articles-100079_doc_pdf.pdf">cmfchile.cl/portal/estadisticas/617/articles-100079_doc_pdf.pdf</a></div></li>
+    <li><span>[4]</span><div>Ley 20.009, modificada por la Ley 21.234 (2020) y la Ley 21.673 (2024). Resumen de cambios en [3].</div></li>
+    <li><span>[5]</span><div>The Clinic (abr-2024). SERNAC oficia a Rappi por cobros indebidos de membresía.<br><a href="https://www.theclinic.cl/2024/04/03/sernac-rappi-cobros-indebidos-oficio/">theclinic.cl/2024/04/03/sernac-rappi-cobros-indebidos-oficio</a></div></li>
+    <li><span>[6]</span><div>Visa (26-mar-2026). Visa launches Enhanced Subscription Manager.<br><a href="https://corporate.visa.com/en/sites/visa-perspectives/newsroom/visa-enhanced-subscription-manager-launch.html">corporate.visa.com/…/visa-enhanced-subscription-manager-launch.html</a></div></li>
+    <li><span>[7]</span><div>Nubank (dic-2025). Nubank launches subscription manager to help control recurring charges.<br><a href="https://nu.com/en/newsroom/consumers/nubank-launches-subscription-manager-to-help-control-recurring-charges">nu.com/en/newsroom/consumers/nubank-launches-subscription-manager…</a></div></li>
+    <li><span>[8]</span><div>Rocket Money, sitio oficial del producto.<br><a href="https://www.rocketmoney.com">rocketmoney.com</a></div></li>
+    <li><span>[9]</span><div>CMF (mar-2026). Calificación anual de bancos de importancia sistémica (6 bancos).<br><a href="https://www.cmfchile.cl/portal/prensa/625/w4-article-109087.html">cmfchile.cl/portal/prensa/625/w4-article-109087.html</a></div></li>
+    <li><span>[10]</span><div>Ley 21.521 (2023), Ley Fintec, y Ley 21.719 (2024), de protección de datos personales.</div></li>
+    <li><span>[11]</span><div>Código, dataset sintético, evaluación y capturas del prototipo CONDOR (repositorio del equipo, octubre 2026).</div></li>
+    <li><span>[12]</span><div>BancoEstado, "Mis Suscripciones en mi App BancoEstado": muestra suscripciones de comercios que usan tokenización.<br><a href="https://www.bancoestado.cl/content/bancoestado-public/cl/es/home/home/app-bancoestado/mis-suscripciones-app---bancoestado-personas.html">bancoestado.cl/…/mis-suscripciones-app---bancoestado-personas.html</a></div></li>
+    <li><span>[13]</span><div>Visa, Visa Stop Payment Service: permite a los emisores detener pagos con tarjeta guardada, incluidos los recurrentes, antes de autorizarlos.<br><a href="https://developer.visa.com/capabilities/visa-stop-payment-service/overview">developer.visa.com/capabilities/visa-stop-payment-service</a></div></li>
+  </ol>
+  <div class="foot"><span>Las cifras marcadas como pendientes no tienen fuente verificada todavía.</span></div>
+</section>
+
+<!-- ======================= ANEXO B · USO DE IA ======================= -->
+<section class="slide annex" data-label="Anexo · Uso de IA" data-notes="Anexo obligatorio según el programa del curso. Revisar y completar antes de subir.">
+  <h2 class="rv">Declaración de uso de inteligencia artificial</h2>
+  <div class="ia">
+    <div class="rv" style="--d:150ms"><span class="kick" style="color:var(--cobalt)">Herramienta y propósito</span><p><b>Claude (Anthropic), vía Claude Code.</b> Usada para diseñar y programar esta presentación en HTML, proponer su estructura según la pauta y la guía extendida de la E2, buscar y verificar fuentes públicas, y capturar pantallas del prototipo.</p><p><span class="tbd">Agregar otros usos (p. ej., apoyo en el código del prototipo)</span></p></div>
+    <div class="rv" style="--d:250ms"><span class="kick" style="color:var(--cobalt)">Cómo influyó y responsabilidad</span><p>La IA propuso estructura, redacción y diseño. El equipo revisó, corrigió y validó cada contenido y cifra. Las entrevistas, las decisiones del proyecto y el prototipo son trabajo del equipo, que responde por la exactitud de todo el material.</p></div>
+  </div>
+  <div class="foot"><span>Según la política de uso de IA del programa ING2030 2026-2.</span></div>
+</section>
+
+</div></div>
+
+<div class="hud" id="hud">
+  <button type="button" id="prev" aria-label="Anterior">←</button>
+  <button type="button" id="next" aria-label="Siguiente">→</button>
+  <button type="button" id="nbtn" aria-label="Notas del presentador">N</button>
+  <button type="button" id="fbtn" aria-label="Pantalla completa">⤢</button>
+</div>
+<aside class="notes" id="notes" aria-live="polite"><div class="nh"><span id="nlabel"></span><span class="keys">← → navegar · N notas · F pantalla completa · T reinicia</span><span class="timer" id="timer">00:00</span></div><div id="ntext"></div></aside>
+
+<script>
+(() => {
+  const deck = document.getElementById('deck');
+  const slides = [...document.querySelectorAll('.slide')];
+  const pad = n => String(n).padStart(2, '0');
+  if (new URLSearchParams(location.search).has('static')) document.documentElement.classList.add('static');
+  let cur = 0;
+
+  // Cabecera con índice, sección, marca y regla (salvo la portada)
+  slides.forEach((s, i) => {
+    if (s.dataset.nohead) return;
+    const head = document.createElement('div');
+    head.className = 'head';
+    head.innerHTML = `<span class="idx"><b>${pad(i + 1)}</b>${s.dataset.label || ''}</span><span class="mark"><svg viewBox="0 0 120 40"><use href="#condor"/></svg>CONDOR</span>`;
+    const rule = document.createElement('div');
+    rule.className = 'rule';
+    s.prepend(rule); s.prepend(head);
+  });
+
+  function fit() { deck.style.setProperty('--s', Math.min(innerWidth / 1920, innerHeight / 1080)); }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === cur));
+    const s = slides[cur];
+    document.getElementById('nlabel').textContent = `${pad(cur + 1)} / ${pad(slides.length)} · ${s.dataset.label || ''}`;
+    document.getElementById('ntext').textContent = s.dataset.notes || '';
+    if (location.hash !== '#' + (cur + 1)) history.replaceState(null, '', '#' + (cur + 1));
+  }
+  function go(n) { cur = Math.max(0, Math.min(slides.length - 1, n)); render(); }
+
+  addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key;
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(k)) { e.preventDefault(); go(cur + 1); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(k)) { e.preventDefault(); go(cur - 1); }
+    else if (k === 'Home') go(0);
+    else if (k === 'End') go(slides.length - 1);
+    else if (k === 'n' || k === 'N') document.body.classList.toggle('show-notes');
+    else if (k === 'f' || k === 'F') toggleFs();
+    else if (k === 't' || k === 'T') t0 = Date.now();
+  });
+  function toggleFs() {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  }
+  document.getElementById('prev').onclick = () => go(cur - 1);
+  document.getElementById('next').onclick = () => go(cur + 1);
+  document.getElementById('nbtn').onclick = () => document.body.classList.toggle('show-notes');
+  document.getElementById('fbtn').onclick = toggleFs;
+
+  let tx0 = null;
+  addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; }, {passive: true});
+  addEventListener('touchend', e => {
+    if (tx0 === null) return;
+    const dx = e.changedTouches[0].clientX - tx0;
+    if (Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1));
+    tx0 = null;
+  });
+
+  let hudT;
+  addEventListener('mousemove', () => {
+    document.body.classList.add('show-hud');
+    clearTimeout(hudT); hudT = setTimeout(() => document.body.classList.remove('show-hud'), 2000);
+  });
+
+  let t0 = Date.now();
+  setInterval(() => {
+    const s = Math.floor((Date.now() - t0) / 1000);
+    document.getElementById('timer').textContent = `${pad(Math.floor(s / 60))}:${pad(s % 60)}`;
+  }, 500);
+
+  addEventListener('resize', fit);
+  addEventListener('hashchange', () => { const n = parseInt(location.hash.slice(1), 10); if (n && n - 1 !== cur) go(n - 1); });
+  fit();
+  const h = parseInt(location.hash.slice(1), 10);
+  go(h ? h - 1 : 0);
+})();
+</script>
+</body>
+</html>
