@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CÓNDOR · Video demo</title>
+<style>
+  :root { --bg: #F4F4F1; --ink: #111; --muted: #555; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 48px; }
+  h1 { font-size: clamp(24px, 4vw, 40px); font-weight: 800; margin: 0 0 6px; }
+  p { color: var(--muted); margin: 0 0 20px; line-height: 1.5; }
+  video { width: 100%; height: auto; display: block; background: #000; border-radius: 6px; }
+  small { display: block; margin-top: 14px; color: var(--muted); }
+  a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <h1>CÓNDOR · Video demo del prototipo</h1>
+  <p>ING2030 · Grupo 68 · Entrega 2. El filtro de detección es el código real del prototipo; los cobros y la conexión con el banco son simulados.</p>
+  <video controls preload="metadata" playsinline src="condor-demo-prototipo.mp4"></video>
+  <small>¿No se reproduce? <a href="condor-demo-prototipo.mp4" download>Descargar el video (MP4, 8 MB)</a></small>
+</main>
+</body>
+</html>
