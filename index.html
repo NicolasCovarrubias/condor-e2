@@ -7,21 +7,22 @@
 <meta name="description" content="CONDOR: tus suscripciones a la vista desde el primer cobro, dentro de la app del banco. Presentación Entrega 2, ING2030 UC.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Grechen+Fuemen&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* Deck 16:9 autorado a 1920x1080 y escalado al viewport. Estilo de grilla suiza: grotesca negra, un solo color plano (cobalto) en bloques, naranja solo para alertas. Detalle en notas (tecla N). */
 :root{
-  --paper:#F4F4F1; --white:#FFFFFF; --ink:#0E0E0E; --ink2:#3A3A38; --gray:#76766F; --line:#D9D8D2;
-  --cobalt:#5468D9; --cobalt-soft:#E8EBFA; --cover:#D9DFF7;
-  --signal:#D9825E; --signal-soft:#F8ECE5;
+  --paper:#FAFAF9; --white:#FFFFFF; --ink:#292524; --ink2:#44403C; --gray:#78716C; --line:#E7E5E4;
+  --cobalt:#059669; --cobalt-soft:#E3F3EC; --cover:#E1F2EA;
+  --signal:#3B82F6; --signal-soft:#E8EFFC;
   --ok:#138A55;
-  --bar:#C9C9C2;
-  --f:'Plus Jakarta Sans',system-ui,sans-serif;
+  --bar:#D6D3D1;
+  --f:'IBM Plex Mono',ui-monospace,monospace;
+  --t:'Grechen Fuemen',cursive;
   --m:'IBM Plex Mono',ui-monospace,monospace;
   --ease:cubic-bezier(.2,.7,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:#E4E4DF;color:var(--ink);font-family:var(--f);-webkit-font-smoothing:antialiased;overflow:hidden}
+html,body{height:100%;background:#EDECE9;color:var(--ink);font-family:var(--f);-webkit-font-smoothing:antialiased;overflow:hidden}
 b,strong{font-weight:700}
 
 /* ---------- Escenario ---------- */
@@ -41,14 +42,14 @@ b,strong{font-weight:700}
 .foot{position:absolute!important;left:120px;right:120px;bottom:38px;display:flex;justify-content:space-between;gap:40px;font:400 13px/1.5 var(--m);color:var(--gray)}
 
 /* Tipografía */
-h1{font:700 118px/.98 'Bricolage Grotesque',var(--f);font-variation-settings:'opsz' 96;letter-spacing:-.04em}
-h2{font:700 66px/1.06 var(--f);letter-spacing:-.025em;max-width:1560px}
+h1{font:400 116px/1.02 var(--t)}
+h2{font:400 70px/1.1 var(--t);max-width:1560px}
 .kick{font:500 15px var(--m);letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
-.num{font:800 120px/.9 var(--f);letter-spacing:-.04em;white-space:nowrap}
-.cap{font:400 22px/1.4 var(--f);color:var(--ink2)}
+.num{font:400 120px/.95 var(--t);white-space:nowrap}
+.cap{font:400 20px/1.45 var(--f);color:var(--ink2)}
 sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 /* Contenido pendiente del equipo: visible a propósito */
-.tbd{display:inline-block;border:1.5px dashed var(--signal);background:var(--signal-soft);color:#9A4A26;padding:0 9px;font:500 .78em/1.65 var(--m);white-space:nowrap}
+.tbd{display:inline-block;border:1.5px dashed var(--signal);background:var(--signal-soft);color:#2563EB;padding:0 9px;font:500 .78em/1.65 var(--m);white-space:nowrap}
 
 /* Revelado */
 .rv{opacity:0}
@@ -63,7 +64,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .s-cover h1{margin:0 0 70px}
 .team{border-top:1px solid var(--line);padding-top:22px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:baseline}
 .team b{font:600 14px var(--m);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
-.team span{font:400 17px/1.6 var(--f);color:var(--gray)}
+.team span{font:400 15px/1.6 var(--f);color:var(--gray)}
 .s-cover .r{background:var(--cover);display:flex;align-items:center;justify-content:center;padding:80px}
 .ledger{width:100%;background:var(--white);box-shadow:0 24px 50px rgba(40,50,110,.14)}
 .ledger .hd{display:flex;justify-content:space-between;padding:22px 28px;border-bottom:2px solid var(--ink);font:600 13px var(--m);letter-spacing:.1em;text-transform:uppercase}
@@ -72,7 +73,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .lrow .m{font:700 22px var(--f)}
 .lrow .a{font:500 21px var(--m);text-align:right}
 .tag{display:inline-block;font:600 12px var(--m);letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;justify-self:start}
-.tag.k{background:#EDEDE8;color:var(--ink2)} .tag.c{background:var(--cobalt);color:#fff} .tag.s{background:var(--signal);color:#fff} .tag.g{background:transparent;color:var(--gray);padding-left:0}
+.tag.k{background:#F0EFED;color:var(--ink2)} .tag.c{background:var(--cobalt);color:#fff} .tag.s{background:var(--signal);color:#fff} .tag.g{background:transparent;color:var(--gray);padding-left:0}
 .lrow .d{font:400 15px var(--m);color:var(--gray);text-align:right}
 
 /* ---------- 02 Problema ---------- */
@@ -127,16 +128,16 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .srow.us{background:var(--cobalt);color:#fff;margin:0 -24px;padding:26px 24px;border-bottom:none}
 .srow.us .nm,.srow.us .how,.srow.us .w{color:#fff}
 .srow.us .yes{background:#fff;color:var(--cobalt)}
-.diff{margin-top:auto;padding-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.diff{margin-top:auto;padding-top:24px;margin-bottom:24px;display:grid;grid-template-columns:1fr 1fr;gap:60px}
 .diff .kick{display:block;margin-bottom:10px}
-.diff p{font:700 28px/1.2 var(--f)}
+.diff p{font:600 21px/1.4 var(--f)}
 
 /* ---------- 06 Flujo del prototipo (capturas reales) ---------- */
 .steps{flex:1;margin-top:34px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:28px 44px;min-height:0}
 .step{display:grid;grid-template-rows:auto 1fr;gap:14px;min-height:0}
 .step .t{display:flex;align-items:baseline;gap:16px}
-.step .t b{font:800 50px/.8 var(--f);color:var(--cobalt)}
-.step .t span{font:700 28px/1.1 var(--f)}
+.step .t b{font:400 56px/.8 var(--t);color:var(--cobalt)}
+.step .t span{font:700 23px/1.15 var(--f)}
 .step .t em{font-style:normal;margin-left:auto;font:400 14px var(--m);color:var(--gray)}
 .shot{background:#F5F7FA;border:1.5px solid var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden;min-height:0;padding:8px}
 .shot img{display:block;max-width:100%;max-height:100%;object-fit:contain}
@@ -147,11 +148,20 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 /* ---------- 07 Testeo ---------- */
 .body2{flex:1;display:grid;grid-template-columns:480px 1fr;gap:100px;margin-top:40px;min-height:0}
 .dq{font:500 15px var(--m);letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt);margin-bottom:18px}
-.score .num{color:var(--ink);font-size:200px}
+.score .num{color:var(--ink);font-size:150px}
 .score .cap{margin-top:14px;max-width:440px}
 .users{margin-top:44px;padding-top:24px;border-top:2px solid var(--ink)}
-.users .row{display:flex;gap:30px;margin-top:14px}
-.users .row div{font:800 44px/1 var(--f);color:#9A4A26}
+.survey{display:grid;gap:22px;margin-top:16px}
+.sv{display:grid;grid-template-columns:200px 1fr;gap:4px 20px;align-items:center}
+.sv .big2{font:400 56px/1 var(--t);color:var(--cobalt);white-space:nowrap}
+.sv .big2 small{font-size:.5em;color:var(--gray)}
+.sv > span{font:400 16px/1.4 var(--f);color:var(--ink2)}
+.dist{grid-column:2;display:flex;gap:10px;align-items:flex-end;height:64px;margin-top:6px}
+.dist div{width:30px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font:500 12px var(--f);color:var(--gray)}
+.dist i{display:block;width:100%;background:var(--cobalt);margin:3px 0}
+.dist div.z i{background:var(--bar);height:2px}
+.svnote{margin-top:14px;font:400 13px/1.45 var(--f);color:var(--gray)}
+.users .row div{font:800 44px/1 var(--f);color:#2563EB}
 .users .row span{display:block;font:400 14px var(--m);color:var(--gray);margin-top:6px}
 .chart .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
 .legend{display:flex;gap:20px;font:400 14px var(--m);color:var(--gray)}
@@ -189,21 +199,21 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .road h4{font:700 34px/1.05 var(--f);margin-bottom:10px}
 .road p{font:400 19px/1.45 var(--f);color:var(--gray);max-width:330px}
 .end{margin-top:auto;display:grid;grid-template-columns:1fr 760px;gap:70px;align-items:stretch}
-.pend .kick{display:block;margin-bottom:14px;color:#9A4A26}
+.pend .kick{display:block;margin-bottom:14px;color:#2563EB}
 .pend li{list-style:none;display:flex;gap:14px;align-items:baseline;font:400 20px/1.4 var(--f);color:var(--ink2);margin-top:10px}
 .pend li::before{content:"";flex:none;width:14px;height:14px;border:2px solid var(--signal);transform:translateY(1px)}
 .closing{background:var(--cobalt);color:#fff;padding:36px 40px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
 .closing svg{width:96px;height:34px;color:#fff}
-.closing p{font:700 46px/1.02 var(--f);letter-spacing:-.02em}
+.closing p{font:400 50px/1.1 var(--t)}
 
 /* ---------- 10 Cierre ---------- */
 .s-end{display:grid;grid-template-columns:1fr 760px;gap:90px;align-items:center}
-.s-end .ask{font:700 92px/1.02 'Bricolage Grotesque',var(--f);font-variation-settings:'opsz' 96;letter-spacing:-.035em}
+.s-end .ask{font:400 88px/1.08 var(--t)}
 .s-end .ask + p{margin-top:36px;font:400 24px/1.45 var(--f);color:var(--ink2);max-width:760px}
 .acro{border-left:2px solid var(--ink);padding-left:56px}
-.acro div{display:grid;grid-template-columns:96px 1fr;align-items:center;padding:6px 0}
-.acro b{font:800 92px/1 'Bricolage Grotesque',var(--f);font-variation-settings:'opsz' 96;color:var(--cobalt)}
-.acro span{font:500 25px/1.3 var(--f);color:var(--ink2)}
+.acro div{display:grid;grid-template-columns:124px 1fr;align-items:center;padding:6px 0}
+.acro b{font:400 92px/1 var(--t);color:var(--cobalt)}
+.acro span{font:400 28px/1.3 var(--f);color:var(--gray)}
 .acro span strong{color:var(--ink);font-weight:700}
 
 /* ---------- Anexos ---------- */
@@ -362,13 +372,18 @@ html.static .rv,html.static .bar .fl,html.static .decay i{animation:none!importa
 </section>
 
 <!-- ======================= 07 TESTEO ======================= -->
-<section class="slide" data-label="Testeo" data-notes="(0:35) Prototipamos donde estaba la duda. Duda uno: ¿se puede reconocer una suscripción desde el primer cobro? En simulación, con 11.384 cobros sintéticos de 2.876 clientes, el filtro clasificó bien los 11 comercios desde el primer cobro de un cliente nuevo. El gráfico muestra el aprendizaje: Fitness Club, Jumbo y Uber se repiten casi igual, pero solo uno es suscripción; lo que los separa es la regularidad. Ojo: son datos sintéticos; validan la lógica, no la precisión bancaria real. Duda dos: ¿el titular entiende lo que CONDOR le muestra? [completar con número de personas, qué entendieron, cuánto se demoraron y qué cambiamos en la app].">
+<section class="slide" data-label="Testeo" data-notes="(0:35) Prototipamos donde estaba la duda. Duda uno: ¿se puede reconocer una suscripción desde el primer cobro? En simulación, con 11.384 cobros sintéticos de 2.876 clientes, el filtro clasificó bien los 11 comercios desde el primer cobro de un cliente nuevo. El gráfico muestra el aprendizaje: Fitness Club, Jumbo y Uber se repiten casi igual, pero solo uno es suscripción; lo que los separa es la regularidad. Ojo: son datos sintéticos; validan la lógica, no la precisión bancaria real. Duda dos: ¿el titular entiende lo que CONDOR le muestra? Ocho usuarios usaron el prototipo con instrucciones y calificaron la facilidad para navegar y entender las alertas con 4,0 de 5 en promedio; nadie puso menos de 3. Y 6 de los 8 dijeron que ya les habían cobrado una suscripción que no usaban o subido el precio sin aviso. Es una muestra pequeña de conocidos: lo tomamos como indicio, no como medición.">
   <h2 class="rv">Repetir no basta: lo que separa es la regularidad.</h2>
   <div class="body2">
     <div>
       <div class="score rv" style="--d:150ms"><div class="dq">Duda 1 · ¿Se reconoce desde el 1er cobro?</div><div class="num">11/11</div><div class="cap">comercios bien clasificados en simulación (11.384 cobros sintéticos)</div></div>
-      <div class="users rv" style="--d:350ms"><div class="dq" style="margin:0">Duda 2 · ¿El titular lo entiende?</div><span class="tbd" style="margin-top:12px">[N] personas usaron el gemelo</span>
-        <div class="row"><div>[x/N]<span>entendió qué detectó CONDOR</span></div><div>[t] s<span>hasta decidir</span></div></div>
+      <div class="users rv" style="--d:350ms"><div class="dq" style="margin:0">Duda 2 · ¿El titular lo entiende? · encuesta a 8 usuarios</div>
+        <div class="survey">
+          <div class="sv"><div class="big2">4,0<small>/5</small></div><span>facilidad para navegar y entender las alertas, tras usar el prototipo</span>
+            <div class="dist" aria-label="Notas: 1 y 2 sin respuestas; 3: 3 personas; 4: 2; 5: 3"><div class="z">0<i></i>1</div><div class="z">0<i></i>2</div><div>3<i style="height:36px"></i>3</div><div>2<i style="height:24px"></i>4</div><div>3<i style="height:36px"></i>5</div></div></div>
+          <div class="sv"><div class="big2">6 de 8</div><span>ya vivieron un cobro sin uso o un alza sin aviso</span></div>
+        </div>
+        <div class="svnote">Muestra pequeña de contactos del equipo, con instrucciones de uso: es un indicio, no una medición.</div>
       </div>
     </div>
     <div class="chart rv" style="--d:250ms">
@@ -395,7 +410,7 @@ html.static .rv,html.static .bar .fl,html.static .decay i{animation:none!importa
       </div>
     </div>
   </div>
-  <div class="foot"><span>Dataset sintético del prototipo: 2.876 clientes, 11 comercios. Valida la lógica, no la precisión bancaria real.</span></div>
+  <div class="foot"><span>Simulación: dataset sintético del prototipo (2.876 clientes, 11 comercios). Encuesta: informe E2, sección 4.1<sup class="r">14</sup></span></div>
 </section>
 
 <!-- ======================= 08 OPORTUNIDAD ======================= -->
@@ -440,18 +455,18 @@ html.static .rv,html.static .bar .fl,html.static .decay i{animation:none!importa
 </section>
 
 <!-- ======================= 10 CIERRE ======================= -->
-<section class="slide s-end" data-label="Cierre" data-notes="(0:10) Cerrar con la pregunta y dejarla unos segundos en silencio. CONDOR: cobros a la vista, observa cómo cobra cada comercio, nota el primer cobro, duda y pregunta, organiza tus suscripciones y revela alzas. Gracias.">
+<section class="slide s-end" data-label="Cierre" data-notes="(0:10) Cerrar con la pregunta y dejarla unos segundos en silencio. CONDOR: Control de Órdenes y Notificación de Débitos Opacos y Recurrentes. Gracias.">
   <div>
     <div class="ask rv">¿Cuántas suscripciones pagaste este mes sin darte cuenta?</div>
     <p class="rv" style="--d:200ms">CONDOR quiere que esa respuesta sea siempre cero.</p>
   </div>
   <div class="acro rv" style="--d:300ms">
-    <div><b>C</b><span><strong>Cobros</strong> recurrentes a la vista</span></div>
-    <div><b>O</b><span><strong>Observa</strong> cómo cobra cada comercio</span></div>
-    <div><b>N</b><span><strong>Nota</strong> la suscripción desde el primer cobro</span></div>
-    <div><b>D</b><span><strong>Duda</strong> y te pregunta, no decide solo</span></div>
-    <div><b>O</b><span><strong>Organiza</strong> todas tus suscripciones</span></div>
-    <div><b>R</b><span><strong>Revela</strong> las alzas de precio</span></div>
+    <div><b>C</b><span><strong>Control</strong> de</span></div>
+    <div><b>O</b><span><strong>Órdenes</strong> y</span></div>
+    <div><b>N</b><span><strong>Notificación</strong> de</span></div>
+    <div><b>D</b><span><strong>Débitos</strong></span></div>
+    <div><b>O</b><span><strong>Opacos</strong> y</span></div>
+    <div><b>R</b><span><strong>Recurrentes</strong></span></div>
   </div>
 </section>
 
@@ -472,6 +487,7 @@ html.static .rv,html.static .bar .fl,html.static .decay i{animation:none!importa
     <li><span>[11]</span><div>Código, dataset sintético, evaluación y capturas del prototipo CONDOR (repositorio del equipo, octubre 2026).</div></li>
     <li><span>[12]</span><div>BancoEstado, "Mis Suscripciones en mi App BancoEstado": muestra suscripciones de comercios que usan tokenización.<br><a href="https://www.bancoestado.cl/content/bancoestado-public/cl/es/home/home/app-bancoestado/mis-suscripciones-app---bancoestado-personas.html">bancoestado.cl/…/mis-suscripciones-app---bancoestado-personas.html</a></div></li>
     <li><span>[13]</span><div>Visa, Visa Stop Payment Service: permite a los emisores detener pagos con tarjeta guardada, incluidos los recurrentes, antes de autorizarlos.<br><a href="https://developer.visa.com/capabilities/visa-stop-payment-service/overview">developer.visa.com/capabilities/visa-stop-payment-service</a></div></li>
+    <li><span>[14]</span><div>Encuesta de testeo del prototipo a 8 usuarios, octubre 2026. Informe E2 del grupo 68, sección 4.1.</div></li>
   </ol>
   <div class="foot"><span>Las cifras marcadas como pendientes no tienen fuente verificada todavía.</span></div>
 </section>
