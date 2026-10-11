@@ -7,7 +7,7 @@
 <meta name="description" content="CONDOR: tus suscripciones a la vista desde el primer cobro, dentro de la app del banco. Presentación Entrega 2, ING2030 UC.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* Deck 16:9 autorado a 1920x1080 y escalado al viewport. Estilo de grilla suiza: grotesca negra, un solo color plano (cobalto) en bloques, naranja solo para alertas. Detalle en notas (tecla N). */
 :root{
@@ -16,7 +16,7 @@
   --signal:#D9825E; --signal-soft:#F8ECE5;
   --ok:#138A55;
   --bar:#C9C9C2;
-  --f:'Archivo',system-ui,sans-serif;
+  --f:'Plus Jakarta Sans',system-ui,sans-serif;
   --m:'IBM Plex Mono',ui-monospace,monospace;
   --ease:cubic-bezier(.2,.7,.2,1);
 }
@@ -35,16 +35,16 @@ b,strong{font-weight:700}
 .head{position:absolute!important;top:44px;left:120px;right:120px;height:58px;display:flex;align-items:center;justify-content:space-between}
 .head .idx{display:flex;align-items:center;gap:20px;font:500 15px var(--m);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
 .head .idx b{width:58px;height:58px;background:var(--cobalt);color:#fff;display:flex;align-items:center;justify-content:center;font:600 20px var(--m);letter-spacing:0}
-.mark{display:flex;align-items:center;gap:12px;font:800 20px var(--f);font-stretch:125%;letter-spacing:.06em}
+.mark{display:flex;align-items:center;gap:12px;font:800 20px 'Archivo',sans-serif;font-stretch:125%;letter-spacing:.06em}
 .mark svg{width:42px;height:15px}
 .rule{position:absolute!important;top:126px;left:120px;right:120px;height:2px;background:var(--ink)}
 .foot{position:absolute!important;left:120px;right:120px;bottom:38px;display:flex;justify-content:space-between;gap:40px;font:400 13px/1.5 var(--m);color:var(--gray)}
 
 /* Tipografía */
 h1{font:700 118px/.98 'Bricolage Grotesque',var(--f);font-variation-settings:'opsz' 96;letter-spacing:-.04em}
-h2{font:800 72px/1.0 var(--f);font-stretch:96%;letter-spacing:-.03em;max-width:1560px}
+h2{font:700 66px/1.06 var(--f);letter-spacing:-.025em;max-width:1560px}
 .kick{font:500 15px var(--m);letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
-.num{font:800 160px/.86 var(--f);font-stretch:68%;letter-spacing:-.02em}
+.num{font:800 120px/.9 var(--f);letter-spacing:-.04em;white-space:nowrap}
 .cap{font:400 22px/1.4 var(--f);color:var(--ink2)}
 sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 /* Contenido pendiente del equipo: visible a propósito */
@@ -92,7 +92,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .shift .i{font:500 16px var(--m);color:var(--gray)}
 .shift .was{font:600 34px/1.15 var(--f);color:var(--gray);text-decoration:line-through;text-decoration-thickness:2px}
 .shift .ar{width:40px;height:40px;background:var(--cobalt);color:#fff;display:flex;align-items:center;justify-content:center;font:700 22px var(--f)}
-.shift .now{font:800 38px/1.1 var(--f);font-stretch:96%;letter-spacing:-.01em}
+.shift .now{font:700 38px/1.1 var(--f);letter-spacing:-.01em}
 .shift .ev{text-align:right;font:400 15px/1.5 var(--m);color:var(--gray)}
 
 /* ---------- 04 Solución ---------- */
@@ -101,13 +101,13 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .node .n{width:76px;height:76px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font:600 24px var(--m);margin-bottom:26px;position:relative;z-index:1}
 .node.c .n{background:var(--cobalt)}
 .node::after{content:"";position:absolute;top:38px;left:76px;right:0;height:2px;background:var(--ink)}
-.node h4{font:800 36px/1.05 var(--f);font-stretch:94%;letter-spacing:-.015em;margin-bottom:12px}
+.node h4{font:700 36px/1.05 var(--f);letter-spacing:-.015em;margin-bottom:12px}
 .node p{font:400 19px/1.45 var(--f);color:var(--gray);max-width:300px;min-height:56px}
 .outs{border:2px solid var(--ink);background:var(--white)}
 .out{display:grid;grid-template-columns:56px 1fr;align-items:center;gap:18px;padding:20px 24px;border-bottom:1px solid var(--line)}
 .out:last-child{border-bottom:none}
 .out i{width:56px;height:56px;display:flex;align-items:center;justify-content:center;font:700 22px var(--f);font-style:normal}
-.out b{display:block;font:800 26px/1.15 var(--f);font-stretch:96%}
+.out b{display:block;font:700 26px/1.15 var(--f)}
 .out span{font:400 15px var(--m);color:var(--gray)}
 .out.k i{background:var(--cobalt);color:#fff} .out.q i{background:#EDEDE8;color:var(--ink)} .out.s i{background:var(--signal);color:#fff}
 .next{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;border-top:1px solid var(--line);padding-top:24px}
@@ -129,14 +129,14 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .srow.us .yes{background:#fff;color:var(--cobalt)}
 .diff{margin-top:auto;padding-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:60px}
 .diff .kick{display:block;margin-bottom:10px}
-.diff p{font:700 28px/1.2 var(--f);font-stretch:96%}
+.diff p{font:700 28px/1.2 var(--f)}
 
 /* ---------- 06 Flujo del prototipo (capturas reales) ---------- */
 .steps{flex:1;margin-top:34px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:28px 44px;min-height:0}
 .step{display:grid;grid-template-rows:auto 1fr;gap:14px;min-height:0}
 .step .t{display:flex;align-items:baseline;gap:16px}
-.step .t b{font:800 52px/.8 var(--f);font-stretch:68%;color:var(--cobalt)}
-.step .t span{font:800 28px/1.1 var(--f);font-stretch:96%}
+.step .t b{font:800 50px/.8 var(--f);color:var(--cobalt)}
+.step .t span{font:700 28px/1.1 var(--f)}
 .step .t em{font-style:normal;margin-left:auto;font:400 14px var(--m);color:var(--gray)}
 .shot{background:#F5F7FA;border:1.5px solid var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden;min-height:0;padding:8px}
 .shot img{display:block;max-width:100%;max-height:100%;object-fit:contain}
@@ -151,7 +151,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .score .cap{margin-top:14px;max-width:440px}
 .users{margin-top:44px;padding-top:24px;border-top:2px solid var(--ink)}
 .users .row{display:flex;gap:30px;margin-top:14px}
-.users .row div{font:800 48px/1 var(--f);font-stretch:68%;color:#9A4A26}
+.users .row div{font:800 44px/1 var(--f);color:#9A4A26}
 .users .row span{display:block;font:400 14px var(--m);color:var(--gray);margin-top:6px}
 .chart .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
 .legend{display:flex;gap:20px;font:400 14px var(--m);color:var(--gray)}
@@ -173,9 +173,9 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .tl{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink)}
 .tl div{padding:26px 40px 0 0}
 .tl b{display:inline-block;background:var(--cobalt);color:#fff;font:600 16px var(--m);padding:6px 10px;margin-bottom:16px}
-.tl p{font:700 30px/1.15 var(--f);font-stretch:96%;max-width:470px}
-.stats{margin-top:auto;display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:60px}
-.stat .num{font-size:128px}
+.tl p{font:700 30px/1.15 var(--f);max-width:470px}
+.stats{margin-top:auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:70px}
+.stat .num{font-size:100px}
 .stat .cap{margin-top:12px;font-size:20px}
 .decay{display:flex;align-items:center;gap:12px;margin-top:12px;font:400 14px var(--m);color:var(--gray)}
 .decay i{display:block;height:12px;transform-origin:left}
@@ -186,7 +186,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .road > div{padding:28px 36px 0 0;position:relative}
 .road .n{display:inline-flex;width:48px;height:48px;background:var(--ink);color:#fff;align-items:center;justify-content:center;font:600 18px var(--m);margin-bottom:20px}
 .road > div:last-child .n{background:var(--cobalt)}
-.road h4{font:800 34px/1.05 var(--f);font-stretch:94%;margin-bottom:10px}
+.road h4{font:700 34px/1.05 var(--f);margin-bottom:10px}
 .road p{font:400 19px/1.45 var(--f);color:var(--gray);max-width:330px}
 .end{margin-top:auto;display:grid;grid-template-columns:1fr 760px;gap:70px;align-items:stretch}
 .pend .kick{display:block;margin-bottom:14px;color:#9A4A26}
@@ -194,7 +194,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .pend li::before{content:"";flex:none;width:14px;height:14px;border:2px solid var(--signal);transform:translateY(1px)}
 .closing{background:var(--cobalt);color:#fff;padding:36px 40px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
 .closing svg{width:96px;height:34px;color:#fff}
-.closing p{font:800 46px/1.02 var(--f);font-stretch:94%;letter-spacing:-.02em}
+.closing p{font:700 46px/1.02 var(--f);letter-spacing:-.02em}
 
 /* ---------- Anexos ---------- */
 .annex h2{font-size:56px}
@@ -277,7 +277,6 @@ html.static .rv,html.static .bar .fl,html.static .decay i{animation:none!importa
     </div>
     <p class="bridge"><b>Ley 20.009</b>lo que el cliente no reconoce, el banco lo devuelve</p>
   </div>
-  <div class="valid rv" style="--d:400ms">Validado con <span class="tbd">[N] usuarios</span> <span class="tbd">[N] personas de banca</span></div>
   <div class="foot"><span>[1] SERNAC, Ranking Financiero 2022, estimación anual del equipo · [3] CMF, Nota Técnica Ley de Fraudes, oct-2025</span></div>
 </section>
 
