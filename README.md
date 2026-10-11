@@ -26,6 +26,7 @@ Los marcadores punteados en naranja son contenido pendiente del equipo.
 
 ## Versiones anteriores
 
+- v5, Grechen Fuemen + IBM Plex Mono: https://nicolascovarrubias.github.io/condor-e2/versiones/v5-grechen/ (tag `v5-grechen`)
 - v4, Plus Jakarta Sans: https://nicolascovarrubias.github.io/condor-e2/versiones/v4-jakarta/ (tag `v4-jakarta`)
 - v3, grilla con cobalto: https://nicolascovarrubias.github.io/condor-e2/versiones/v3-grilla/ (tag `v3-grilla`)
 - v2, minimalista con serif: https://nicolascovarrubias.github.io/condor-e2/versiones/v2-minimal/ (tag `v2-minimal`)

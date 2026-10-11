@@ -7,7 +7,7 @@
 <meta name="description" content="CONDOR: tus suscripciones a la vista desde el primer cobro, dentro de la app del banco. Presentación Entrega 2, ING2030 UC.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Grechen+Fuemen&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* Deck 16:9 autorado a 1920x1080 y escalado al viewport. Estilo de grilla suiza: grotesca negra, un solo color plano (cobalto) en bloques, naranja solo para alertas. Detalle en notas (tecla N). */
 :root{
@@ -16,9 +16,9 @@
   --signal:#3B82F6; --signal-soft:#E8EFFC;
   --ok:#138A55;
   --bar:#D6D3D1;
-  --f:'IBM Plex Mono',ui-monospace,monospace;
-  --t:'Grechen Fuemen',cursive;
-  --m:'IBM Plex Mono',ui-monospace,monospace;
+  --f:'Inter',system-ui,sans-serif;
+  --t:'Plus Jakarta Sans',system-ui,sans-serif;
+  --m:'Inter',system-ui,sans-serif;
   --ease:cubic-bezier(.2,.7,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -42,10 +42,10 @@ b,strong{font-weight:700}
 .foot{position:absolute!important;left:120px;right:120px;bottom:38px;display:flex;justify-content:space-between;gap:40px;font:400 13px/1.5 var(--m);color:var(--gray)}
 
 /* Tipografía */
-h1{font:400 116px/1.02 var(--t)}
-h2{font:400 70px/1.1 var(--t);max-width:1560px}
+h1{font:800 108px/1.0 var(--t);letter-spacing:-.035em}
+h2{font:700 64px/1.08 var(--t);letter-spacing:-.025em;max-width:1560px}
 .kick{font:500 15px var(--m);letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
-.num{font:400 120px/.95 var(--t);white-space:nowrap}
+.num{font:800 116px/.95 var(--t);letter-spacing:-.04em;white-space:nowrap}
 .cap{font:400 20px/1.45 var(--f);color:var(--ink2)}
 sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 /* Contenido pendiente del equipo: visible a propósito */
@@ -80,7 +80,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .duo{flex:1;display:grid;grid-template-columns:1fr 1fr;margin-top:36px;border-top:1px solid var(--line)}
 .duo > div{padding:44px 60px 0 0;display:flex;flex-direction:column}
 .duo > div + div{padding:44px 0 0 60px;border-left:1px solid var(--line)}
-.duo .who{font:700 36px/1.1 var(--f);margin:12px 0 30px}
+.duo .who{font:700 36px/1.1 var(--t);letter-spacing:-.02em;margin:12px 0 30px}
 .duo .num.s{color:var(--signal)}
 .duo .cap{margin-top:20px;max-width:620px}
 .bridge{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);background:var(--cobalt);color:#fff;padding:20px 28px;text-align:center;width:420px;font:500 19px/1.4 var(--f)}
@@ -93,7 +93,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .shift .i{font:500 16px var(--m);color:var(--gray)}
 .shift .was{font:600 34px/1.15 var(--f);color:var(--gray);text-decoration:line-through;text-decoration-thickness:2px}
 .shift .ar{width:40px;height:40px;background:var(--cobalt);color:#fff;display:flex;align-items:center;justify-content:center;font:700 22px var(--f)}
-.shift .now{font:700 38px/1.1 var(--f);letter-spacing:-.01em}
+.shift .now{font:700 38px/1.1 var(--t);letter-spacing:-.02em}
 .shift .ev{text-align:right;font:400 15px/1.5 var(--m);color:var(--gray)}
 
 /* ---------- 04 Solución ---------- */
@@ -102,13 +102,13 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .node .n{width:76px;height:76px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font:600 24px var(--m);margin-bottom:26px;position:relative;z-index:1}
 .node.c .n{background:var(--cobalt)}
 .node::after{content:"";position:absolute;top:38px;left:76px;right:0;height:2px;background:var(--ink)}
-.node h4{font:700 36px/1.05 var(--f);letter-spacing:-.015em;margin-bottom:12px}
+.node h4{font:700 34px/1.08 var(--t);letter-spacing:-.02em;margin-bottom:12px}
 .node p{font:400 19px/1.45 var(--f);color:var(--gray);max-width:300px;min-height:56px}
 .outs{border:2px solid var(--ink);background:var(--white)}
 .out{display:grid;grid-template-columns:56px 1fr;align-items:center;gap:18px;padding:20px 24px;border-bottom:1px solid var(--line)}
 .out:last-child{border-bottom:none}
 .out i{width:56px;height:56px;display:flex;align-items:center;justify-content:center;font:700 22px var(--f);font-style:normal}
-.out b{display:block;font:700 26px/1.15 var(--f)}
+.out b{display:block;font:700 26px/1.15 var(--t)}
 .out span{font:400 15px var(--m);color:var(--gray)}
 .out.k i{background:var(--cobalt);color:#fff} .out.q i{background:#EDEDE8;color:var(--ink)} .out.s i{background:var(--signal);color:#fff}
 .next{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;border-top:1px solid var(--line);padding-top:24px}
@@ -119,7 +119,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .sota{margin-top:40px;border-top:2px solid var(--ink)}
 .srow{display:grid;grid-template-columns:420px 200px 190px 1fr;align-items:center;border-bottom:1px solid var(--line);padding:22px 0}
 .srow.h{padding:14px 0;font:500 13px var(--m);letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
-.srow .nm{font:700 25px var(--f)}
+.srow .nm{font:700 25px var(--t)}
 .srow .nm small{display:block;font:400 14px var(--m);color:var(--gray);margin-top:4px}
 .srow .w{font:400 17px var(--m);color:var(--ink2)}
 .srow .how{font:400 21px/1.35 var(--f);color:var(--ink2)}
@@ -130,14 +130,14 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .srow.us .yes{background:#fff;color:var(--cobalt)}
 .diff{margin-top:auto;padding-top:24px;margin-bottom:24px;display:grid;grid-template-columns:1fr 1fr;gap:60px}
 .diff .kick{display:block;margin-bottom:10px}
-.diff p{font:600 21px/1.4 var(--f)}
+.diff p{font:700 25px/1.3 var(--t);letter-spacing:-.015em}
 
 /* ---------- 06 Flujo del prototipo (capturas reales) ---------- */
 .steps{flex:1;margin-top:34px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:28px 44px;min-height:0}
 .step{display:grid;grid-template-rows:auto 1fr;gap:14px;min-height:0}
 .step .t{display:flex;align-items:baseline;gap:16px}
-.step .t b{font:400 56px/.8 var(--t);color:var(--cobalt)}
-.step .t span{font:700 23px/1.15 var(--f)}
+.step .t b{font:800 48px/.8 var(--t);color:var(--cobalt)}
+.step .t span{font:700 26px/1.15 var(--t);letter-spacing:-.015em}
 .step .t em{font-style:normal;margin-left:auto;font:400 14px var(--m);color:var(--gray)}
 .shot{background:#F5F7FA;border:1.5px solid var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden;min-height:0;padding:8px}
 .shot img{display:block;max-width:100%;max-height:100%;object-fit:contain}
@@ -149,11 +149,11 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .body2{flex:1;display:grid;grid-template-columns:480px 1fr;gap:100px;margin-top:40px;min-height:0}
 .dq{font:500 15px var(--m);letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt);margin-bottom:18px}
 .score .num{color:var(--ink);font-size:150px}
-.score .cap{margin-top:14px;max-width:440px}
+.score .cap{margin-top:30px;max-width:440px}
 .users{margin-top:44px;padding-top:24px;border-top:2px solid var(--ink)}
 .survey{display:grid;gap:22px;margin-top:16px}
 .sv{display:grid;grid-template-columns:200px 1fr;gap:4px 20px;align-items:center}
-.sv .big2{font:400 56px/1 var(--t);color:var(--cobalt);white-space:nowrap}
+.sv .big2{font:800 50px/1 var(--t);letter-spacing:-.03em;color:var(--cobalt);white-space:nowrap}
 .sv .big2 small{font-size:.5em;color:var(--gray)}
 .sv > span{font:400 16px/1.4 var(--f);color:var(--ink2)}
 .dist{grid-column:2;display:flex;gap:10px;align-items:flex-end;height:64px;margin-top:6px}
@@ -183,7 +183,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .tl{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink)}
 .tl div{padding:26px 40px 0 0}
 .tl b{display:inline-block;background:var(--cobalt);color:#fff;font:600 16px var(--m);padding:6px 10px;margin-bottom:16px}
-.tl p{font:700 30px/1.15 var(--f);max-width:470px}
+.tl p{font:700 30px/1.18 var(--t);letter-spacing:-.02em;max-width:470px}
 .stats{margin-top:auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:70px}
 .stat .num{font-size:100px}
 .stat .cap{margin-top:12px;font-size:20px}
@@ -196,7 +196,7 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .road > div{padding:28px 36px 0 0;position:relative}
 .road .n{display:inline-flex;width:48px;height:48px;background:var(--ink);color:#fff;align-items:center;justify-content:center;font:600 18px var(--m);margin-bottom:20px}
 .road > div:last-child .n{background:var(--cobalt)}
-.road h4{font:700 34px/1.05 var(--f);margin-bottom:10px}
+.road h4{font:700 34px/1.08 var(--t);letter-spacing:-.02em;margin-bottom:10px}
 .road p{font:400 19px/1.45 var(--f);color:var(--gray);max-width:330px}
 .end{margin-top:auto;display:grid;grid-template-columns:1fr 760px;gap:70px;align-items:stretch}
 .pend .kick{display:block;margin-bottom:14px;color:#2563EB}
@@ -204,16 +204,16 @@ sup.r{font:600 .5em var(--m);color:var(--cobalt);margin-left:2px}
 .pend li::before{content:"";flex:none;width:14px;height:14px;border:2px solid var(--signal);transform:translateY(1px)}
 .closing{background:var(--cobalt);color:#fff;padding:36px 40px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
 .closing svg{width:96px;height:34px;color:#fff}
-.closing p{font:400 50px/1.1 var(--t)}
+.closing p{font:800 44px/1.1 var(--t);letter-spacing:-.025em}
 
 /* ---------- 10 Cierre ---------- */
 .s-end{display:grid;grid-template-columns:1fr 760px;gap:90px;align-items:center}
-.s-end .ask{font:400 88px/1.08 var(--t)}
+.s-end .ask{font:800 80px/1.05 var(--t);letter-spacing:-.035em}
 .s-end .ask + p{margin-top:36px;font:400 24px/1.45 var(--f);color:var(--ink2);max-width:760px}
 .acro{border-left:2px solid var(--ink);padding-left:56px}
 .acro div{display:grid;grid-template-columns:124px 1fr;align-items:center;padding:6px 0}
-.acro b{font:400 92px/1 var(--t);color:var(--cobalt)}
-.acro span{font:400 28px/1.3 var(--f);color:var(--gray)}
+.acro b{font:800 84px/1 var(--t);color:var(--cobalt)}
+.acro span{font:400 30px/1.3 var(--f);color:var(--gray)}
 .acro span strong{color:var(--ink);font-weight:700}
 
 /* ---------- Anexos ---------- */
